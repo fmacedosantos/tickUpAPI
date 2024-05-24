@@ -2,6 +2,9 @@
 {
     public class Ingresso
     {
-        public string Codigo { get; set; }
+        public string IdIngresso { get; set; }
+        public double Valor { get; set; }
+        public int IdCompra { get; set; }
+        public int IdEvento { get; set; }
     }
 }
