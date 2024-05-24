@@ -1,4 +1,5 @@
-﻿using api.Services;
+﻿using api.Models;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -18,10 +19,18 @@ namespace api.Controllers
         [HttpGet("Usuario/{email}")]
         public IActionResult ObterIngressosPorEmail(string email)
         {
+            // Apresenta os ingressos comprados pelo usuário.
             try
             {
                 var idsIngressos = _compraService.ObterIngressosPorEmail(email);
-                return Ok(idsIngressos);
+                if (idsIngressos != null)
+                {
+                    return Ok(idsIngressos);
+                }
+                else
+                {
+                    return NotFound($"O usuário cadastrado não possui ingressos.");
+                }
             }
             catch (Exception ex)
             {

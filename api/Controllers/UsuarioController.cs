@@ -36,21 +36,21 @@ namespace api.Controllers
         }
 
         [HttpPost("Login")]
-        public IActionResult Login([FromBody] LoginRequest loginRequest)
+        public IActionResult Login([FromBody] LoginUsuarioRequest loginRequest)
         {
             if (loginRequest == null)
             {
-                return BadRequest("Dados de login inválidos.");
+                return BadRequest(false);
             }
 
             var resultado = _usuarioService.Login(loginRequest);
             if (resultado)
             {
-                return Ok("Login realizado com sucesso.");
+                return Ok(true);
             }
             else
             {
-                return Unauthorized("Email ou senha inválidos.");
+                return Unauthorized(false);
             }
         }
     }
