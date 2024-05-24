@@ -1,9 +1,15 @@
+using api.Services;
+using TickUp.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+var connectionString = "casaMacedo"; 
+builder.Services.AddSingleton<UsuarioService>(new UsuarioService(connectionString));
+builder.Services.AddSingleton<EventoService>(new EventoService(connectionString));
+builder.Services.AddSingleton<IngressoService>(new IngressoService(connectionString));
+builder.Services.AddSingleton<CompraService>(new CompraService(connectionString));
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
