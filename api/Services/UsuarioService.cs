@@ -39,7 +39,7 @@ namespace api.Services
             }
         }
 
-        public bool Login(LoginRequest loginRequest)
+        public bool Login(LoginUsuarioRequest loginRequest)
         {
             using (var con = FabricaConexao.getConexao(_connectionString))
             {
