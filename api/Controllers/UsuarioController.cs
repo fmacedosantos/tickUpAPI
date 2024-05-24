@@ -1,5 +1,6 @@
 ﻿using api.Models;
-using Microsoft.AspNetCore.Http;
+using api.Requests;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -8,12 +9,49 @@ namespace api.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        [HttpPost]
-        public IActionResult Cadastrar(string emailUser, string cpfUser, string nomeUser, string telefoneUser, string senhaUser, int idadeUser)
+        private readonly UsuarioService _usuarioService;
+
+        public UsuarioController(UsuarioService usuarioService)
         {
-            Usuario user = new Usuario(emailUser, cpfUser, nomeUser, telefoneUser, senhaUser, idadeUser);
-            user.InserirUsuario();
-            return Ok(user);
+            _usuarioService = usuarioService;
+        }
+
+        [HttpPost("Cadastrar")]
+        public IActionResult Cadastrar([FromBody] Usuario usuario)
+        {
+            if (usuario == null)
+            {
+                return BadRequest("Dados inválidos.");
+            }
+
+            try
+            {
+                string mensagem = _usuarioService.InserirUsuario(usuario);
+                return Ok(mensagem);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Erro ao cadastrar usuário: {ex.Message}");
+            }
+        }
+
+        [HttpPost("Login")]
+        public IActionResult Login([FromBody] LoginRequest loginRequest)
+        {
+            if (loginRequest == null)
+            {
+                return BadRequest("Dados de login inválidos.");
+            }
+
+            var resultado = _usuarioService.Login(loginRequest);
+            if (resultado)
+            {
+                return Ok("Login realizado com sucesso.");
+            }
+            else
+            {
+                return Unauthorized("Email ou senha inválidos.");
+            }
         }
     }
 }
