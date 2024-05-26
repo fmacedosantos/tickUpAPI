@@ -4,7 +4,7 @@ using TickUp.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = "conexaoPadrao";
+var connectionString = "casaMacedo";
 builder.Services.AddSingleton<UsuarioService>(new UsuarioService(connectionString));
 builder.Services.AddSingleton<EventoService>(new EventoService(connectionString));
 builder.Services.AddSingleton<IngressoService>(new IngressoService(connectionString));
