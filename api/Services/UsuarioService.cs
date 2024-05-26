@@ -46,11 +46,11 @@ namespace api.Services
                 try
                 {
                     con.Open();
-                    var query = "SELECT COUNT(*) FROM Usuario WHERE email = @Email AND senha = @Senha";
+                    var query = "SELECT COUNT(*) FROM usuario WHERE email = @email AND senha = @senha";
                     using (var cmd = new MySqlCommand(query, con))
                     {
-                        cmd.Parameters.AddWithValue("@Email", loginRequest.Email);
-                        cmd.Parameters.AddWithValue("@Senha", loginRequest.Senha);
+                        cmd.Parameters.AddWithValue("@email", loginRequest.Email);
+                        cmd.Parameters.AddWithValue("@senha", loginRequest.Senha);
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
                     }
