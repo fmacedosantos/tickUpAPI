@@ -21,12 +21,12 @@ namespace TickUp.Services
                 {
                     con.Open();
 
-                    string query = "SELECT COUNT(*) FROM Evento WHERE emailContato = @EmailContato AND idEvento = @Id";
+                    string query = "SELECT COUNT(*) FROM evento WHERE emailContato = @emailContato AND idEvento = @id";
 
                     using (var cmd = new MySqlCommand(query, con))
                     {
-                        cmd.Parameters.AddWithValue("@EmailContato", emailContato);
-                        cmd.Parameters.AddWithValue("@Id", idEvento);
+                        cmd.Parameters.AddWithValue("@emailContato", emailContato);
+                        cmd.Parameters.AddWithValue("@id", idEvento);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
