@@ -14,9 +14,9 @@ namespace api.Services
             _connectionString = connectionString;
         }
 
-        public List<string> ObterIngressosPorEmail(string email)
+        public List<Ingresso> ObterIngressosPorEmail(string email)
         {
-            List<string> idsIngressos = new List<string>();
+            List<Ingresso> ingressos = new List<Ingresso>();
 
             try
             {
@@ -24,7 +24,13 @@ namespace api.Services
                 {
                     con.Open();
 
-                    string query = "SELECT idIngresso FROM Ingresso JOIN Compra ON Ingresso.idCompra = Compra.idCompra WHERE Compra.email = @Email";
+                    string query = @"
+                        SELECT Ingresso.idIngresso, Evento.nomeEvento 
+                        FROM Ingresso 
+                        JOIN Compra ON Ingresso.idCompra = Compra.idCompra 
+                        JOIN Evento ON Ingresso.idEvento = Evento.idEvento 
+                        WHERE Compra.email = @Email";
+
                     using (var cmd = new MySqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@Email", email);
@@ -33,8 +39,13 @@ namespace api.Services
                         {
                             while (reader.Read())
                             {
-                                string idIngresso = reader["idIngresso"].ToString();
-                                idsIngressos.Add(idIngresso);
+                                var ingresso = new Ingresso
+                                {
+                                    IdIngresso = reader["idIngresso"].ToString(),
+                                    NomeEvento = reader["nomeEvento"].ToString()
+                                };
+
+                                ingressos.Add(ingresso);
                             }
                         }
                     }
@@ -42,10 +53,10 @@ namespace api.Services
             }
             catch (Exception)
             {
-                throw; 
+                throw;
             }
 
-            return idsIngressos;
+            return ingressos;
         }
     }
 }
