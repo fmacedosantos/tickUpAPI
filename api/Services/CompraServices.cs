@@ -25,15 +25,15 @@ namespace api.Services
                     con.Open();
 
                     string query = @"
-                        SELECT Ingresso.idIngresso, Evento.nomeEvento 
-                        FROM Ingresso 
-                        JOIN Compra ON Ingresso.idCompra = Compra.idCompra 
-                        JOIN Evento ON Ingresso.idEvento = Evento.idEvento 
-                        WHERE Compra.email = @Email";
+                SELECT ingresso.idIngresso, evento.nomeEvento 
+                FROM ingresso 
+                JOIN compra ON ingresso.idCompra = compra.idCompra 
+                JOIN evento ON ingresso.idEvento = evento.idEvento 
+                WHERE compra.email = @email";
 
                     using (var cmd = new MySqlCommand(query, con))
                     {
-                        cmd.Parameters.AddWithValue("@Email", email);
+                        cmd.Parameters.AddWithValue("@email", email);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -51,12 +51,13 @@ namespace api.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
 
             return ingressos;
         }
+
     }
 }
