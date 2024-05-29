@@ -2,6 +2,7 @@
 using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 
 namespace api.Controllers
 {
@@ -19,17 +20,16 @@ namespace api.Controllers
         [HttpGet("Usuario/{email}")]
         public IActionResult ObterIngressosPorEmail(string email)
         {
-            // Apresenta os ingressos comprados pelo usuário.
             try
             {
-                var idsIngressos = _compraService.ObterIngressosPorEmail(email);
-                if (idsIngressos != null)
+                List<Ingresso> ingressos = _compraService.ObterIngressosPorEmail(email);
+                if (ingressos != null && ingressos.Count > 0)
                 {
-                    return Ok(idsIngressos);
+                    return Ok(ingressos);
                 }
                 else
                 {
-                    return NotFound($"O usuário cadastrado não possui ingressos.");
+                    return NotFound("O usuário cadastrado não possui ingressos.");
                 }
             }
             catch (Exception ex)
