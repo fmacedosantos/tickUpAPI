@@ -21,10 +21,10 @@ namespace api.Services
                 {
                     con.Open();
 
-                    string query = "SELECT COUNT(*) FROM Ingresso WHERE idIngresso = @IdIngresso";
+                    string query = "SELECT COUNT(*) FROM ingresso WHERE idIngresso = @idIngresso";
                     using (var cmd = new MySqlCommand(query, con))
                     {
-                        cmd.Parameters.AddWithValue("@IdIngresso", idIngresso);
+                        cmd.Parameters.AddWithValue("@idIngresso", idIngresso);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
                         return count > 0;
