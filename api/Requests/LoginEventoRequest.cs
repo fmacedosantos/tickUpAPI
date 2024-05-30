@@ -3,6 +3,6 @@
     public class LoginEventoRequest
     {
         public string EmailContato { get; set; }
-        public int IdEvento { get; set; }
+        public string CpfCnpj { get; set; }
     }
 }

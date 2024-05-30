@@ -13,7 +13,7 @@ namespace TickUp.Services
             _connectionString = connectionString;
         }
 
-        public bool Login(string emailContato, int idEvento)
+        public bool Login(string emailContato, string cpfCnpj)
         {
             using (var con = FabricaConexao.getConexao(_connectionString))
             {
@@ -21,12 +21,12 @@ namespace TickUp.Services
                 {
                     con.Open();
 
-                    string query = "SELECT COUNT(*) FROM evento WHERE emailContato = @emailContato AND idEvento = @id";
+                    string query = "SELECT COUNT(*) FROM evento WHERE emailContato = @emailContato AND cpf = @cpf";
 
                     using (var cmd = new MySqlCommand(query, con))
                     {
                         cmd.Parameters.AddWithValue("@emailContato", emailContato);
-                        cmd.Parameters.AddWithValue("@id", idEvento);
+                        cmd.Parameters.AddWithValue("@cpf", cpfCnpj);
 
                         int count = Convert.ToInt32(cmd.ExecuteScalar());
 
