@@ -25,11 +25,11 @@ namespace api.Services
                     con.Open();
 
                     string query = @"
-                SELECT ingresso.idIngresso, evento.nomeEvento 
-                FROM ingresso 
-                JOIN compra ON ingresso.idCompra = compra.idCompra 
-                JOIN evento ON ingresso.idEvento = evento.idEvento 
-                WHERE compra.email = @email";
+                SELECT ingresso.idIngresso, evento.nomeEvento
+                FROM ingresso
+                JOIN evento ON ingresso.idEvento = evento.idEvento
+                JOIN usuario ON ingresso.email = usuario.email
+                WHERE usuario.email = @email;";
 
                     using (var cmd = new MySqlCommand(query, con))
                     {
@@ -53,7 +53,7 @@ namespace api.Services
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception("Erro ao obter ingressos por email", ex);
             }
 
             return ingressos;

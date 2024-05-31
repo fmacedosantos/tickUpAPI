@@ -35,7 +35,7 @@ namespace TickUp.Services
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Erro ao executar login do evento: {ex.Message}");
+                    throw new Exception($"Erro ao executar login do evento: {ex.Message}");
                     return false;
                 }
             }

@@ -1,4 +1,5 @@
-﻿using api.Services;
+﻿using api.Models;
+using api.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -52,6 +53,27 @@ namespace api.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, false);  
+            }
+        }
+
+        [HttpGet("Usuario/{email}")]
+        public IActionResult ObterIngressosPorEmail(string email)
+        {
+            try
+            {
+                List<Ingresso> ingressos = _ingressoService.ObterIngressosPorEmail(email);
+                if (ingressos != null)
+                {
+                    return Ok(ingressos);
+                }
+                else
+                {
+                    return Ok(new List<Ingresso>());
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Erro ao obter os ingressos do usuário: {ex.Message}");
             }
         }
     }
