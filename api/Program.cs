@@ -8,7 +8,6 @@ var connectionString = "jawsdb";
 builder.Services.AddSingleton<UsuarioService>(new UsuarioService(connectionString));
 builder.Services.AddSingleton<EventoService>(new EventoService(connectionString));
 builder.Services.AddSingleton<IngressoService>(new IngressoService(connectionString));
-builder.Services.AddSingleton<CompraService>(new CompraService(connectionString));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
