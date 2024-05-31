@@ -62,6 +62,54 @@ namespace api.Services
                 }
             }
         }
+
+        public bool VerificarExistenciaPorEmail(string email)
+        {
+            try
+            {
+                using (var con = FabricaConexao.getConexao(_connectionString))
+                {
+                    con.Open();
+
+                    string query = "SELECT COUNT(*) FROM usuario WHERE email = @email";
+                    using (var cmd = new MySqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@email", email);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public bool VerificarExistenciaPorCpf(string cpf)
+        {
+            try
+            {
+                using (var con = FabricaConexao.getConexao(_connectionString))
+                {
+                    con.Open();
+
+                    string query = "SELECT COUNT(*) FROM usuario WHERE cpf = @cpf";
+                    using (var cmd = new MySqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@cpf", cpf);
+
+                        int count = Convert.ToInt32(cmd.ExecuteScalar());
+                        return count > 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 
 }

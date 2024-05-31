@@ -53,5 +53,47 @@ namespace api.Controllers
                 return Unauthorized(false);
             }
         }
+
+        [HttpGet("Verificar/Email/{email}")]
+        public IActionResult VerificarExistenciaPorEmail(string email)
+        {
+            try
+            {
+                bool usuarioValido = _usuarioService.VerificarExistenciaPorEmail(email);
+                if (usuarioValido)
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return NotFound(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, false);
+            }
+        }
+
+        [HttpGet("Verificar/Cpf/{cpf}")]
+        public IActionResult VerificarExistenciaPorCpf(string cpf)
+        {
+            try
+            {
+                bool usuarioValido = _usuarioService.VerificarExistenciaPorCpf(cpf);
+                if (usuarioValido)
+                {
+                    return Ok(true);
+                }
+                else
+                {
+                    return NotFound(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, false);
+            }
+        }
     }
 }
