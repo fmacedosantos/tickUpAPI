@@ -23,13 +23,13 @@ namespace api.Controllers
             try
             {
                 List<Ingresso> ingressos = _compraService.ObterIngressosPorEmail(email);
-                if (ingressos != null && ingressos.Count > 0)
+                if (ingressos != null)
                 {
                     return Ok(ingressos);
                 }
                 else
                 {
-                    return NotFound("O usuário cadastrado não possui ingressos.");
+                    return Ok(new List<Ingresso>()); 
                 }
             }
             catch (Exception ex)
@@ -37,5 +37,6 @@ namespace api.Controllers
                 return StatusCode(500, $"Erro ao obter os ingressos do usuário: {ex.Message}");
             }
         }
+
     }
 }
