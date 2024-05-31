@@ -81,5 +81,32 @@ namespace api.Services
 
             return ingressos;
         }
+
+        public void DeletarIngresso(string idIngresso)
+        {
+            try
+            {
+                using (var con = FabricaConexao.getConexao(_connectionString))
+                {
+                    con.Open();
+
+                    string query = "DELETE FROM ingresso WHERE idIngresso = @idIngresso";
+                    using (var cmd = new MySqlCommand(query, con))
+                    {
+                        cmd.Parameters.AddWithValue("@idIngresso", idIngresso);
+                        int affectedRows = cmd.ExecuteNonQuery();
+
+                        if (affectedRows == 0)
+                        {
+                            throw new Exception("Nenhum ingresso foi encontrado com o id fornecido.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Erro ao deletar o ingresso: {ex.Message}");
+            }
+        }
     }
 }
